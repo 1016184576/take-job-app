@@ -35,9 +35,9 @@ const app = express();
 
 //添加一条数据
 /* StudyModel.create({
-  name: "沙和尚",
-  age: 36,
-  address: "流沙河"
+  name: "猪八戒",
+  age: 360,
+  address: "高老庄"
 },(err,doc)=>{
   if(!err){
     console.log(doc);
@@ -49,7 +49,7 @@ const app = express();
 
  //删除一条数据
 /* StudyModel.findOneAndRemove({
-  age: 38
+  age: 500
 },(err,doc)=>{
   if(!err){
     console.log(`${doc.name}删除成功`);
@@ -76,9 +76,9 @@ app.get('/', (req, res) => res.send('<h1>Hello React</h1>'))
 
 app.get('/data', (req, res) => {
   StudyModel.find({
-    age: { $gt: 35, $lt: 100}
+    //age: 500
   }).
-  where('address').equals('流沙河').
+  //where('address').equals('流沙河').
   exec((err,doc)=>{
     if(!err){
       res.json(doc);
