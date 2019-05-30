@@ -1,0 +1,38 @@
+
+
+ /* ios解决滑动问题 */
+ *,*:after,*:before{
+  -webkit-overflow-scrolling: touch;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/*在移动端上input和textarea边框问题*/
+ /*去掉ios上阴影*/
+ input,textarea{
+  outline: none;
+  -webkit-appearance: none;
+}
+
+
+/*清除浮动*/
+.clearfix {
+  zoom: 1;
+}
+ 
+.clearfix:after {
+  clear: both;
+  content: '.';
+  display: block;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.page-title{
+  text-align: center;
+  font-size: 24px;
+}
+
+.user-info{
+  margin: 30px 0;
+}
