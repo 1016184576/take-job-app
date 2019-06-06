@@ -13,16 +13,11 @@ export default function fetch(options) {
       params: options.params || '',
     }).then(res => {
       options.isShowLoading !== false && Toast.hide();
-      
       let { data } = res;
       if (res.status === 200) {
-        if (data.code === '0') {
-          resolve(data)
-        } else {
-          //Toast.fail(data.errMsg);
-        }
+        resolve(data);
       } else {
-        reject(res.data)
+        reject(data)
       }
     }).catch(err => {
       console.log(err)
@@ -56,6 +51,9 @@ function handleError(err) {
         Toast.fail('网络请求超时！')
         break;
       case 500:
+        Toast.fail('系统错误！')
+        break;
+      default:
         Toast.fail('系统错误！')
         break;
     }

@@ -6,7 +6,7 @@ import { $localStorage } from '../common/storage';
 
 class AuthRouter extends Component{
   componentWillMount(){
-    let isAuthenticated = $localStorage.get("user") ? true : false;
+    let isAuthenticated = $localStorage.get("token") ? true : false;
     this.setState({ isAuthenticated },() => {
       if(!isAuthenticated){
         this.props.history.replace({
@@ -28,7 +28,7 @@ AuthRouter.propTypes = {
   path: PropTypes.string.isRequired,
   exact: PropTypes.bool,
   strict: PropTypes.bool,
-  component: PropTypes.func.isRequired
+  //component: PropTypes.func.isRequired
 }
 
 export default withRouter(AuthRouter);
