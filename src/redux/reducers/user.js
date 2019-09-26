@@ -1,8 +1,13 @@
-import { USER_REGISTER, USER_LOGIN, ERROR_MSG, UPDATE_INFO } from '../action/actionTypes';
+import { USER_REGISTER, USER_LOGIN, ERROR_MSG, UPDATE_INFO, LOGIN_OUT } from '../action/actionTypes';
 import { $localStorage } from '../../common/storage';
+let user = $localStorage.get('user');
+
+let info = user ? user : {
+  userName: '',
+  userType: 'elite',
+}
 let initState = {
-  userName:'',
-  userType:'elite',
+  ...info,
   errMsg:'',
   isAuth: false,
 }
@@ -10,6 +15,8 @@ let initState = {
 const userReducer = (state = initState, action)=>{
   switch(action.type){
     case USER_REGISTER:
+      $localStorage.set('token',action.payload.token)
+      $localStorage.set('user', action.payload)
       return {
         ...state,
         ...action.payload
@@ -17,12 +24,14 @@ const userReducer = (state = initState, action)=>{
     case USER_LOGIN:
       let { payload } = action;
       $localStorage.set('token',payload.token)
+      $localStorage.set('user', payload)
       return {
         ...state,
         ...payload,
         isAuth: payload.token ? true : false,
       }
     case UPDATE_INFO:
+        $localStorage.set('user', action.payload)
         return {
           ...state,
           ...action.payload
@@ -31,6 +40,10 @@ const userReducer = (state = initState, action)=>{
       return {
         ...state,
         errMsg: action.errMsg
+      }
+    case LOGIN_OUT:
+      return {
+        ...initState
       }
     default:
       return state;

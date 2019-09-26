@@ -16,7 +16,9 @@ class Register extends React.Component {
       confirmPassword: ''
     }
   }
-
+  componentWillMount(){
+    localStorage.clear();
+  }
   handelChange(key, value) {
     this.setState({
       [key]: value

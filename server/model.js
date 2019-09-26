@@ -10,27 +10,34 @@ mongoose.connect(URL, (err) => {
 
 
 const models = {
-  user:{
-    'username':{type:String,require: true},
-    'pwd':{type:String,require: true},
-    'type':{type:String,require: true},
-    'avatar':{type:String},
-    'desc':{type:String},
-    'title':{type:String},
-    'company':{type:String},
-    'money':{type:String},
+  user: {
+    'username': { type: String, require: true },
+    'pwd': { type: String, require: true },
+    'type': { type: String, require: true },
+    'avatar': { type: String },
+    'desc': { type: String },
+    'title': { type: String },
+    'company': { type: String },
+    'money': { type: String },
   },
-  chat:{}
+  chat: {
+    'chatid': { type: String, require: true },
+    'from': { type: String, require: true },
+    'to': { type: String, require: true },
+    'isRead': { type: Boolean, default: false },
+    'contend': { type: String, require: true, default: '' },
+    'create_time': { type: Number, default: new Date().getTime() },
+  }
 }
 
 for (const key in models) {
   if (models.hasOwnProperty(key)) {
-    mongoose.model(key,new mongoose.Schema(models[key]));
+    mongoose.model(key, new mongoose.Schema(models[key]));
   }
 }
 
 module.exports = {
-  getModel(name){
+  getModel(name) {
     return mongoose.model(name);
   }
 }

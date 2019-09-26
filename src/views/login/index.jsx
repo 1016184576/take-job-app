@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import Logo from '../../components/logo';
 import { Button, InputItem, WingBlank, WhiteSpace, List, Toast } from 'antd-mobile';
 import './index.less';
@@ -39,17 +38,14 @@ class Login extends React.Component {
     this.props.login({
       ...this.state
     }).then(() => {
-      this.setState({
-        redirectAuth: true
-      })
+      const { userType, history } = this.props;
+      userType === 'boss' ? history.push('/elite') : history.push('/boss');
     }).catch(msg=>{
       Toast.fail(msg)
     })
   }
 
   render() {
-    let { from } = this.props.location.state || { from: { pathname: "/bossinfo" } };
-    if (this.state.redirectAuth) return <Redirect to={from} />;
     return (
       <div className="login-container">
         <Logo />
@@ -72,6 +68,7 @@ class Login extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    userType: state.user.userType,
     isAuth: state.user.isAuth,
     errMsg: state.user.errMsg
   }

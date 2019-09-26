@@ -2,12 +2,15 @@ const express = require('express');
 const utility = require('utility');
 const model = require('./model');
 const UserModel = model.getModel('user');
+const ChatModel = model.getModel('chat');
 
 const Router = express.Router();
 
 Router.get('/list', (req, res) => {
   authLogin(req, res);
-  UserModel.find({}, (err, doc) => {
+  const { type } = req.query;
+  console.log(req.query)
+  UserModel.find(type ? {type} : {}, (err, doc) => {
     return res.json({
       code: 0,
       data: doc,
@@ -16,12 +19,18 @@ Router.get('/list', (req, res) => {
   })
 })
 
+Router.get('/getChatList',(req,res)=>{
+  authLogin(req, res);
+  const { user } = req.query;
+})
+
 //删除所有的
 /* UserModel.deleteMany({},(err, doc) => {
   console.log(doc)
 }) */
 
 Router.post('/login', (req, res) => {
+  console.log(req.body)
   const { userName, pwd } = req.body;
   UserModel.findOne({
     username: userName
@@ -92,7 +101,6 @@ Router.post('/updateInfo', (req, res) => {
   }, {
       ...req.body
     }, (err, doc) => {
-      console.log(doc)
       if (doc) {
         const data = Object.assign({}, {
           userName: doc.username,
@@ -140,9 +148,21 @@ Router.post('/register', (req, res) => {
             msg: '注册失败！'
           })
         } else if (user) {
+          res.cookie('userId', user._id);
           return res.json({
             code: 0,
-            data: true,
+            data: {
+              userName: user.username,
+              userType: user.type,
+              token: 'AHSDW41225DWD45SD55WS21A',
+              userId: user._id,
+              userType: user.type,
+              title: user.title,
+              company: user.company,
+              desc: user.desc,
+              money: user.money,
+              avatar: user.avatar,
+            },
             msg: ''
           })
         }

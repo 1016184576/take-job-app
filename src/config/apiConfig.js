@@ -1,5 +1,6 @@
 export const user = {
   register:'/user/register',
   login:'/user/login',
-  updateInfo: '/user/updateInfo' 
+  updateInfo: '/user/updateInfo',
+  getUserList: '/user/list'  
 }

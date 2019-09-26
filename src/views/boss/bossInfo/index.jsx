@@ -35,7 +35,7 @@ class BossInfo extends React.Component {
       ...this.state,
       userId: this.props.user.userId
     }).then(() => {
-      this.props.history.push('/boss');
+      this.props.history.push('/elite');
     }).catch(msg=>{
       Toast.fail(msg)
     })

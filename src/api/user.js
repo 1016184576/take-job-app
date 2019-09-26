@@ -26,3 +26,10 @@ export const reqUpdateInfo = (data) => {
       data
   })
 }
+export const reqGetUserList = (params) => {
+  return fetch({
+      url: `${ user.getUserList }`,
+      method: 'get',
+      params
+  })
+}

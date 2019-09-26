@@ -1,11 +1,13 @@
-import { ERROR_MSG, USER_REGISTER, USER_LOGIN, UPDATE_INFO } from './actionTypes';
-import { reqRegister, reqLogin, reqUpdateInfo } from '../../api/user';
+import { ERROR_MSG, USER_REGISTER, USER_LOGIN, UPDATE_INFO, GET_USER_LIST, LOGIN_OUT } from './actionTypes';
+import { reqRegister, reqLogin, reqUpdateInfo, reqGetUserList } from '../../api/user';
 
 export const userRegisterAction = userInfo => ({ type: USER_REGISTER, payload: userInfo })
 
 export const userLoginAction = userInfo => ({ type: USER_LOGIN, payload: userInfo })
 
 export const updateInfoAction = userInfo => ({ type: UPDATE_INFO, payload: userInfo })
+
+export const userGetUserListAction = data => ({ type: GET_USER_LIST, payload: data })
 
 export const errorMsgAction = msg => ({ type: ERROR_MSG, errMsg: msg })
 
@@ -14,13 +16,9 @@ export const errorMsgAction = msg => ({ type: ERROR_MSG, errMsg: msg })
 export const register = userInfo => {
   return dispatch => {
     return new Promise(async (resolve,reject) => {
-      const { username, checked } = userInfo;
       const response = await reqRegister(userInfo);
       if(response.code === 0){
-        dispatch(userRegisterAction({
-          userName: username,
-          userType: checked
-        }))
+        dispatch(userRegisterAction(response.data))
         resolve(response.data)
       }else{
         reject(response.msg);
@@ -56,5 +54,27 @@ export const updateInfo = userInfo => {
         reject(response.msg);
       }
     })
+  }
+}
+
+//获取用户列表
+export const getUserList = type => {
+  return dispatch => {
+    return new Promise(async (resolve,reject) => {
+      const response = await reqGetUserList({ type });
+      if(response.code === 0){
+        dispatch(userGetUserListAction(response.data))
+        resolve(response.data)
+      }else{
+        reject(response.msg);
+      }
+    })
+  }
+}
+
+//退出登陆
+export const loginOut = () => {
+  return dispatch => {
+    dispatch({ type: LOGIN_OUT })
   }
 }

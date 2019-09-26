@@ -25,7 +25,7 @@ class EliteInfo extends React.Component {
       [key]: val
     })
   }
-  
+
   avatarClick = (avatar) => {
     this.setState({ avatar: avatar.text });
   }
@@ -37,7 +37,7 @@ class EliteInfo extends React.Component {
       desc: this.state.desc,
       userId: this.props.user.userId
     }).then(() => {
-      //this.props.history.push('/boss');
+      this.props.history.push('/boss');
     }).catch(msg=>{
       Toast.fail(msg)
     })
